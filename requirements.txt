@@ -1,0 +1,11 @@
+# AI-Driven Game Development Pipeline - Python Dependencies
+
+# Anthropic Claude API
+anthropic>=0.39.0
+
+# Optional: For enhanced image processing
+# Pillow>=10.0.0
+
+# Optional: For progress bars and CLI enhancements
+# tqdm>=4.65.0
+# rich>=13.0.0

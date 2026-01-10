@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# API Keys and Secrets
+.env
+*.key
+*.pem
+secrets/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Generated code (optionally track specific builds)
+# code/*/
+
+# Test results (optionally track specific runs)
+# tests/*/
+
+# Logs
+*.log
+docs/iteration_log.jsonl
+
+# Docker volumes
+.docker/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Godot
+.import/
+*.import
+.mono/
+data_*/

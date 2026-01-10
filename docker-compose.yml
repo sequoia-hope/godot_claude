@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  godot-engine:
+    build: .
+    image: ai-game-pipeline:latest
+    container_name: godot-engine
+    volumes:
+      - ./code:/workspace/code
+      - ./tests:/workspace/tests
+      - ./assets:/workspace/assets
+      - ./scripts:/workspace/scripts
+    environment:
+      - DISPLAY=:99
+    # GPU passthrough for NVIDIA (uncomment if you have NVIDIA GPU)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    working_dir: /workspace
+    stdin_open: true
+    tty: true

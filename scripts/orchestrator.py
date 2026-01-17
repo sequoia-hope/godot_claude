@@ -107,41 +107,68 @@ Requirements:
 
 Iteration: {iteration}
 
-Provide the following files:
-1. main.tscn (scene file) - as text representation
-2. player.gd (player controller)
-3. main.gd (main scene script with screenshot and performance capture)
-4. project.godot (project configuration)
+Provide the following files separated by clear markers:
 
-Format your response as JSON with keys: 'main_scene', 'player_script', 'main_script', 'project_file'"""
+=== FILE: project.godot ===
+[content here]
+
+=== FILE: main.gd ===
+[content here]
+
+=== FILE: player.gd ===
+[content here]
+
+=== FILE: main.tscn ===
+[content here]
+
+Use exactly this format with the === FILE: filename === markers."""
 
         try:
             response = self.client.messages.create(
                 model=self.config["model"],
-                max_tokens=4000,
+                max_tokens=4096,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_prompt}]
             )
 
-            # Parse response - assume it's JSON or extract JSON from markdown
+            # Parse response using file markers
             content = response.content[0].text
+            code_files = self._parse_file_markers(content)
 
-            # Try to extract JSON if wrapped in markdown code blocks
-            if "```json" in content:
-                json_start = content.find("```json") + 7
-                json_end = content.find("```", json_start)
-                content = content[json_start:json_end].strip()
-            elif "```" in content:
-                json_start = content.find("```") + 3
-                json_end = content.find("```", json_start)
-                content = content[json_start:json_end].strip()
+            if not code_files:
+                print("Warning: No files parsed from response, using fallback")
+                return self._get_fallback_code()
 
-            code_files = json.loads(content)
             return code_files
 
         except Exception as e:
             print(f"Error generating code: {e}")
             return self._get_fallback_code()
+
+    def _parse_file_markers(self, content: str) -> Dict[str, str]:
+        """Parse files from marker-delimited format"""
+        import re
+
+        files = {}
+        # Match pattern: === FILE: filename ===\n[content]
+        pattern = r'=== FILE: (.+?) ===\s*\n(.*?)(?=\n=== FILE:|$)'
+        matches = re.findall(pattern, content, re.DOTALL)
+
+        for filename, file_content in matches:
+            filename = filename.strip()
+            file_content = file_content.strip()
+
+            # Map filenames to expected keys
+            if filename == 'project.godot':
+                files['project_file'] = file_content
+            elif filename == 'main.gd':
+                files['main_script'] = file_content
+            elif filename == 'player.gd':
+                files['player_script'] = file_content
+            elif filename == 'main.tscn':
+                files['main_scene'] = file_content
+
+        return files
 
     def _get_fallback_code(self) -> Dict[str, str]:
         """Fallback code for when API is unavailable"""

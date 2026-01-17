@@ -158,6 +158,16 @@ Use exactly this format with the === FILE: filename === markers."""
             filename = filename.strip()
             file_content = file_content.strip()
 
+            # Remove markdown code fences if present
+            if file_content.startswith('```'):
+                # Remove opening fence (```gdscript, ```gd, etc.)
+                first_newline = file_content.find('\n')
+                if first_newline != -1:
+                    file_content = file_content[first_newline + 1:]
+            if file_content.endswith('```'):
+                # Remove closing fence
+                file_content = file_content[:-3].rstrip()
+
             # Map filenames to expected keys
             if filename == 'project.godot':
                 files['project_file'] = file_content

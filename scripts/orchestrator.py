@@ -205,8 +205,48 @@ Use exactly this format with the === FILE: filename === markers."""
             if key in code_files:
                 (build_dir / filename).write_text(code_files[key])
 
+        # If main.tscn wasn't generated or is incomplete, create a basic one
+        tscn_file = build_dir / "main.tscn"
+        if not tscn_file.exists() or tscn_file.stat().st_size < 100:
+            print("Generating basic main.tscn scene file...")
+            self._generate_basic_scene(build_dir)
+
         print(f"Code saved to: {build_dir}")
         return build_dir
+
+    def _generate_basic_scene(self, build_dir: Path):
+        """Generate a basic Godot scene file"""
+        scene_content = """[gd_scene load_steps=4 format=3 uid="uid://main_scene"]
+
+[ext_resource type="Script" path="res://main.gd" id="1"]
+[ext_resource type="Script" path="res://player.gd" id="2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_room"]
+size = Vector3(10, 4, 15)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1")
+
+[node name="RoomMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("BoxMesh_room")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 5, 5, 0)
+shadow_enabled = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+"""
+
+        tscn_file = build_dir / "main.tscn"
+        tscn_file.write_text(scene_content)
+        print(f"Generated basic main.tscn")
 
     def run_game_tests(self, build_dir: Path) -> Dict:
         """Run game in Docker container and capture test results"""
@@ -215,10 +255,142 @@ Use exactly this format with the === FILE: filename === markers."""
         test_run_dir = self.tests_dir / f"{build_dir.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         test_run_dir.mkdir(exist_ok=True)
 
-        # TODO: Implement actual Docker execution
-        # For now, create placeholder test results
-        test_results = {
-            "status": "placeholder",
+        # Prepare the project for testing
+        self._prepare_project_for_testing(build_dir)
+
+        # Check if Docker is available
+        docker_available = self._check_docker()
+
+        if not docker_available:
+            print("Warning: Docker not available, using fallback results")
+            return self._get_fallback_test_results(build_dir, test_run_dir)
+
+        # Run tests in Docker container
+        try:
+            test_results = self._run_docker_tests(build_dir, test_run_dir)
+        except Exception as e:
+            print(f"Error running Docker tests: {e}")
+            test_results = self._get_fallback_test_results(build_dir, test_run_dir)
+            test_results["errors"].append(f"Docker execution failed: {str(e)}")
+
+        # Save test results
+        results_file = test_run_dir / "results.json"
+        with open(results_file, 'w') as f:
+            json.dump(test_results, f, indent=2)
+
+        return test_results
+
+    def _check_docker(self) -> bool:
+        """Check if Docker is available"""
+        try:
+            result = subprocess.run(
+                ["docker", "--version"],
+                capture_output=True,
+                timeout=5
+            )
+            return result.returncode == 0
+        except (subprocess.SubprocessError, FileNotFoundError):
+            return False
+
+    def _prepare_project_for_testing(self, build_dir: Path):
+        """Prepare Godot project for automated testing"""
+        # Copy test_runner.gd to build directory
+        test_runner_src = self.workspace_root / "scripts" / "test_runner.gd"
+        if test_runner_src.exists():
+            test_runner_dst = build_dir / "test_runner.gd"
+            test_runner_dst.write_text(test_runner_src.read_text())
+            print(f"Copied test_runner.gd to {build_dir.name}")
+
+        # Update project.godot to include TestRunner as autoload
+        project_file = build_dir / "project.godot"
+        if project_file.exists():
+            project_content = project_file.read_text()
+
+            # Add TestRunner autoload if not present
+            if "TestRunner" not in project_content:
+                # Find or create [autoload] section
+                if "[autoload]" not in project_content:
+                    project_content += "\n[autoload]\n"
+
+                # Add TestRunner entry
+                autoload_line = '\nTestRunner="*res://test_runner.gd"\n'
+                project_content = project_content.replace("[autoload]", "[autoload]" + autoload_line)
+
+                project_file.write_text(project_content)
+                print("Added TestRunner autoload to project.godot")
+
+    def _run_docker_tests(self, build_dir: Path, test_run_dir: Path) -> Dict:
+        """Execute tests in Docker container"""
+        print("Starting Docker test execution...")
+
+        # Build Docker image if needed
+        self._ensure_docker_image()
+
+        # Run Godot in container
+        container_project_path = f"/workspace/code/{build_dir.name}"
+        container_test_path = f"/workspace/tests/{test_run_dir.name}"
+
+        # Docker command to run Godot headless
+        docker_cmd = [
+            "docker", "run", "--rm",
+            "-v", f"{self.workspace_root}/code:/workspace/code",
+            "-v", f"{self.workspace_root}/tests:/workspace/tests",
+            "-e", "DISPLAY=:99",
+            "ai-game-pipeline:latest",
+            "godot", "--headless", "--path", container_project_path,
+            "--", f"--test-output={container_test_path}"
+        ]
+
+        print(f"Running: {' '.join(docker_cmd[:5])} ...")
+
+        # Run with timeout
+        try:
+            result = subprocess.run(
+                docker_cmd,
+                capture_output=True,
+                text=True,
+                timeout=60  # 60 second timeout
+            )
+
+            print("Docker execution completed")
+            if result.stdout:
+                print(f"Output: {result.stdout[:500]}")  # First 500 chars
+            if result.stderr:
+                print(f"Errors: {result.stderr[:500]}")
+
+        except subprocess.TimeoutExpired:
+            print("Warning: Docker test execution timed out")
+            return self._get_fallback_test_results(build_dir, test_run_dir)
+
+        # Parse results from test output
+        results_file = test_run_dir / "results.json"
+        if results_file.exists():
+            with open(results_file, 'r') as f:
+                test_results = json.load(f)
+                print(f"Loaded test results: {test_results.get('status', 'unknown')}")
+                return test_results
+        else:
+            print("Warning: No results.json found, using fallback")
+            return self._get_fallback_test_results(build_dir, test_run_dir)
+
+    def _ensure_docker_image(self):
+        """Ensure Docker image is built"""
+        # Check if image exists
+        check_cmd = ["docker", "images", "-q", "ai-game-pipeline:latest"]
+        result = subprocess.run(check_cmd, capture_output=True, text=True)
+
+        if not result.stdout.strip():
+            print("Docker image not found, building...")
+            print("This will take 5-10 minutes on first run...")
+
+            build_cmd = ["docker-compose", "build"]
+            subprocess.run(build_cmd, cwd=self.workspace_root, check=True)
+            print("Docker image built successfully")
+
+    def _get_fallback_test_results(self, build_dir: Path, test_run_dir: Path) -> Dict:
+        """Generate fallback test results when Docker is unavailable"""
+        return {
+            "status": "fallback",
             "timestamp": datetime.now().isoformat(),
             "build": build_dir.name,
             "screenshots": [],
@@ -228,15 +400,8 @@ Use exactly this format with the === FILE: filename === markers."""
                 "max_fps": 0,
                 "avg_memory_mb": 0
             },
-            "errors": []
+            "errors": ["Tests not executed - Docker unavailable or execution failed"]
         }
-
-        # Save test results
-        results_file = test_run_dir / "results.json"
-        with open(results_file, 'w') as f:
-            json.dump(test_results, f, indent=2)
-
-        return test_results
 
     def analyze_visual_results(self, test_results: Dict) -> Dict:
         """Use multimodal AI to analyze screenshots"""

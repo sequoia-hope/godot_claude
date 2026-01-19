@@ -1,0 +1,149 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4v8qkxhxrwo7"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_mainscript"]
+[ext_resource type="Script" path="res://player.gd" id="2_playerscript"]
+
+[sub_resource type="CapsuleShape3D" id="PlayerCollisionShape"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="FloorCollisionShape"]
+size = Vector3(10, 0.2, 15)
+
+[sub_resource type="BoxMesh" id="FloorMesh"]
+size = Vector3(10, 0.2, 15)
+
+[sub_resource type="BoxShape3D" id="WallShape"]
+size = Vector3(10, 4, 0.2)
+
+[sub_resource type="BoxMesh" id="WallMesh"]
+size = Vector3(10, 4, 0.2)
+
+[sub_resource type="BoxShape3D" id="SideWallShape"]
+size = Vector3(0.2, 4, 15)
+
+[sub_resource type="BoxMesh" id="SideWallMesh"]
+size = Vector3(0.2, 4, 15)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_mainscript")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_playerscript")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("PlayerCollisionShape")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+current = true
+fov = 90.0
+
+[node name="RoomFloor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomFloor"]
+shape = SubResource("FloorCollisionShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomFloor"]
+mesh = SubResource("FloorMesh")
+
+[node name="RoomCeiling" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomCeiling"]
+shape = SubResource("FloorCollisionShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomCeiling"]
+mesh = SubResource("FloorMesh")
+
+[node name="RoomWallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -7.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomWallNorth"]
+shape = SubResource("WallShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomWallNorth"]
+mesh = SubResource("WallMesh")
+
+[node name="RoomWallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 7.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomWallSouth"]
+shape = SubResource("WallShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomWallSouth"]
+mesh = SubResource("WallMesh")
+
+[node name="RoomWallEast" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomWallEast"]
+shape = SubResource("SideWallShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomWallEast"]
+mesh = SubResource("SideWallMesh")
+
+[node name="RoomWallWest" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomWallWest"]
+shape = SubResource("SideWallShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RoomWallWest"]
+mesh = SubResource("SideWallMesh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 5, 8, 3)
+light_energy = 0.8
+shadow_enabled = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Environment" type="Environment" parent="WorldEnvironment"]
+background_mode = 1
+background_color = Color(0.7, 0.75, 0.8, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+```
+
+---
+
+## Implementation Summary
+
+This complete Godot 4.x implementation includes:
+
+### ✅ **Core Files**
+1. **project.godot** - Project configuration with input mappings and autoload
+2. **main.gd** - Scene controller with performance monitoring and grid texture generation
+3. **player.gd** - First-person controller with WASD + mouse look
+4. **test_runner.gd** - Automated testing framework (autoload)
+5. **main.tscn** - Complete scene with proper collision shapes
+
+### ✅ **Key Features**
+- **10m × 15m × 4m room** with floor, ceiling, and 4 walls
+- **Procedurally generated grid texture** (1-meter grid, black on light gray)
+- **Complete collision system** - Player CapsuleShape3D + StaticBody3D walls
+- **First-person controls** - WASD movement, Space jump, Mouse look
+- **Performance monitoring** - Real-time FPS counter and memory usage
+- **Screenshot capture** - F12 to save screenshots
+- **Automated testing** - Comprehensive test suite via TestRunner autoload
+
+### ✅ **Movement Parameters**
+- Walk speed: 5 m/s
+- Jump height: ~2 meters (jump_velocity = 6.4 m/s)
+- Natural gravity: 20 m/s²
+- Mouse sensitivity: 0.002
+
+### ✅ **Technical Compliance**
+- All collision shapes properly defined and assigned
+- Player spawns at center (0, 1, 0)
+- Camera at head height (0.7m above player origin = 1.7m total)
+- DirectionalLight3D with no shadows for performance
+- Clean, commented, production-ready code
+- Target: 60+ FPS
+
+The scene is fully playable and testable. Press ESC to toggle mouse capture, F12 for screenshots!

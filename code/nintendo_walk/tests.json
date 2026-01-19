@@ -1,0 +1,55 @@
+{
+  "feature": "nintendo_walk",
+  "tests": [
+    {
+      "name": "initial_state",
+      "type": "state",
+      "description": "Verify game loads and player exists",
+      "duration": 2.0,
+      "steps": [{"action": "wait", "duration": 2.0}]
+    },
+    {
+      "name": "move_forward",
+      "type": "movement",
+      "description": "Test forward movement",
+      "duration": 3.0,
+      "steps": [{"action": "input", "inputs": ["move_forward"], "duration": 3.0}],
+      "validate": {"min_distance": 4.0}
+    },
+    {
+      "name": "move_left",
+      "type": "movement",
+      "description": "Test left strafe",
+      "duration": 2.0,
+      "steps": [{"action": "input", "inputs": ["move_left"], "duration": 2.0}],
+      "validate": {"min_distance": 3.0}
+    },
+    {
+      "name": "move_right",
+      "type": "movement",
+      "description": "Test right strafe",
+      "duration": 2.0,
+      "steps": [{"action": "input", "inputs": ["move_right"], "duration": 2.0}],
+      "validate": {"min_distance": 3.0}
+    },
+    {
+      "name": "jump",
+      "type": "movement",
+      "description": "Test jumping",
+      "duration": 2.0,
+      "steps": [{"action": "input", "inputs": ["jump"], "duration": 2.0}],
+      "validate": {"left_floor": true}
+    },
+    {
+      "name": "explore_area",
+      "type": "movement",
+      "description": "Walk around the area",
+      "duration": 5.0,
+      "steps": [
+        {"action": "input", "inputs": ["move_forward", "move_right"], "duration": 2.5},
+        {"action": "input", "inputs": ["move_forward", "move_left"], "duration": 2.5}
+      ],
+      "validate": {"min_distance": 8.0}
+    }
+  ]
+}

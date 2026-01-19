@@ -1,0 +1,164 @@
+{
+	"errors": [],
+	"feature": "nintendo_walk",
+	"performance": {
+		"avg_fps": 144.543450647622,
+		"frame_count": 2332,
+		"total_duration": 16.1335569999993
+	},
+	"status": "completed",
+	"summary": {
+		"failed": 0,
+		"issues": [],
+		"overall_status": "passed",
+		"passed": 6,
+		"total": 6
+	},
+	"tests": [
+		{
+			"description": "Verify game loads and player exists",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 0.983381688594818,
+				"duration": 2.009,
+				"end_position": {
+					"x": 0,
+					"y": 0.000284984707832336,
+					"z": 0
+				},
+				"left_floor": true,
+				"start_position": {
+					"x": 0,
+					"y": 0.983666658401489,
+					"z": 0
+				},
+				"total_distance": 0.983381673693657
+			},
+			"name": "initial_state",
+			"status": "passed",
+			"type": "state"
+		},
+		{
+			"description": "Test forward movement",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 12.8587112426758,
+				"duration": 3.01,
+				"end_position": {
+					"x": 0,
+					"y": 0.000284984707832336,
+					"z": -12.8587112426758
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": 0,
+					"y": 0.000284984707832336,
+					"z": 0
+				},
+				"total_distance": 12.8587112426758
+			},
+			"name": "move_forward",
+			"status": "passed",
+			"type": "movement"
+		},
+		{
+			"description": "Test left strafe",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 9.99999809265137,
+				"duration": 2.013,
+				"end_position": {
+					"x": -9.99999809265137,
+					"y": 0.000284984707832336,
+					"z": -12.8587112426758
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": 0,
+					"y": 0.000284984707832336,
+					"z": -12.8587112426758
+				},
+				"total_distance": 9.99999809265137
+			},
+			"name": "move_left",
+			"status": "passed",
+			"type": "movement"
+		},
+		{
+			"description": "Test right strafe",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 9.91944217681885,
+				"duration": 2.01,
+				"end_position": {
+					"x": -0.08055550605059,
+					"y": 0.000284984707832336,
+					"z": -12.8587112426758
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": -9.99999809265137,
+					"y": 0.000284984707832336,
+					"z": -12.8587112426758
+				},
+				"total_distance": 9.9999985024333
+			},
+			"name": "move_right",
+			"status": "passed",
+			"type": "movement"
+		},
+		{
+			"description": "Test jumping",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 1.25394058227539,
+				"duration": 2.014,
+				"end_position": {
+					"x": 1.12806725502014,
+					"y": 0.334347605705261,
+					"z": -12.8587112426758
+				},
+				"left_floor": true,
+				"start_position": {
+					"x": -0.08055550605059,
+					"y": 0.000284984707832336,
+					"z": -12.8587112426758
+				},
+				"total_distance": 5.4113981355913
+			},
+			"name": "jump",
+			"status": "passed",
+			"type": "movement"
+		},
+		{
+			"description": "Walk around the area",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 12.3511381149292,
+				"duration": 5.017,
+				"end_position": {
+					"x": 2.66857433319092,
+					"y": 0.000940568803343922,
+					"z": -25.108865737915
+				},
+				"left_floor": true,
+				"start_position": {
+					"x": 1.12806725502014,
+					"y": 0.334347605705261,
+					"z": -12.8587112426758
+				},
+				"total_distance": 22.3084755390882
+			},
+			"name": "explore_area",
+			"status": "passed",
+			"type": "movement"
+		}
+	],
+	"timestamp": "2026-01-18T21:43:19"
+}

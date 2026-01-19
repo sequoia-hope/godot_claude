@@ -1,0 +1,8 @@
+{
+	"files": [
+		"world_01_player.png",
+		"world_01_topdown.png"
+	],
+	"output_dir": "res://screenshots/",
+	"worlds_captured": 1
+}

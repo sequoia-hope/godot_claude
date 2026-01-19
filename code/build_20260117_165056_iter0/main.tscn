@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://cgx1v8ytj56pp"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Script" path="res://player.gd" id="2_player"]
+
+[sub_resource type="CapsuleShape3D" id="PlayerCollision"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="FloorCollision"]
+size = Vector3(10, 0.2, 15)
+
+[sub_resource type="BoxShape3D" id="WallNorthCollision"]
+size = Vector3(10, 4, 0.2)
+
+[sub_resource type="BoxShape3D" id="WallSouthCollision"]
+size = Vector3(10, 4, 0.2)
+
+[sub_resource type="BoxShape3D" id="WallEastCollision"]
+size = Vector3(0.2, 4, 15)
+
+[sub_resource type="BoxShape3D" id="WallWestCollision"]
+size = Vector3(0.2, 4, 15)
+
+[sub_resource type="BoxShape3D" id="CeilingCollision"]
+size = Vector3(10, 0.2, 15)
+
+[sub_resource type="StandardMaterial3D" id="GridMaterial"]
+albedo_color = Color(0.9, 0.9, 0.9, 1)
+metallic = 0.0
+roughness = 1.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+script = ExtResource("2_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("PlayerCollision")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+fov = 90.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorCollision")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+material_override = SubResource("GridMaterial")
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -7.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
+shape = SubResource("WallNorthCollision")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallNorth"]
+mesh = SubResource("BoxMesh_wall_ns")
+material_override = SubResource("GridMaterial")
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 7.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
+shape = SubResource("WallSouthCollision")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSouth"]
+mesh = SubResource("BoxMesh_wall_ns")
+material_override = SubResource("GridMaterial")
+
+[node name="WallEast" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+
+[node name="Collision

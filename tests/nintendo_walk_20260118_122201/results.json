@@ -1,0 +1,177 @@
+{
+  "errors": [],
+  "feature": "nintendo_walk",
+  "performance": {
+    "avg_fps": 143.430215336939,
+    "frame_count": 2328,
+    "total_duration": 16.230889666666
+  },
+  "status": "completed",
+  "summary": {
+    "failed": 4,
+    "issues": [
+      "Distance 0 < required 5",
+      "Distance 0 < required 3",
+      "Distance 0 < required 3",
+      "Distance 0 < required 8"
+    ],
+    "overall_status": "failed",
+    "passed": 2,
+    "total": 6
+  },
+  "tests": [
+    {
+      "description": "Verify game loads and player exists",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0.901714980602264,
+        "duration": 2.009,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 0,
+          "y": 0.901999950408936,
+          "z": 0
+        },
+        "total_distance": 0.901714965701103
+      },
+      "name": "initial_state",
+      "status": "passed",
+      "type": "state"
+    },
+    {
+      "description": "Test forward movement",
+      "events": [],
+      "issues": [
+        "Distance 0 < required 5"
+      ],
+      "metrics": {
+        "displacement": 0,
+        "duration": 3.01,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "move_forward",
+      "status": "failed",
+      "type": "movement"
+    },
+    {
+      "description": "Test left strafe",
+      "events": [],
+      "issues": [
+        "Distance 0 < required 3"
+      ],
+      "metrics": {
+        "displacement": 0,
+        "duration": 2.014,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "move_left",
+      "status": "failed",
+      "type": "movement"
+    },
+    {
+      "description": "Test right strafe",
+      "events": [],
+      "issues": [
+        "Distance 0 < required 3"
+      ],
+      "metrics": {
+        "displacement": 0,
+        "duration": 2.016,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "move_right",
+      "status": "failed",
+      "type": "movement"
+    },
+    {
+      "description": "Test jumping",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0.334098875522614,
+        "duration": 2.013,
+        "end_position": {
+          "x": 0,
+          "y": 0.334383845329285,
+          "z": 0
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 4.93792964704335
+      },
+      "name": "jump",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Walk around the area",
+      "events": [],
+      "issues": [
+        "Distance 0 < required 8"
+      ],
+      "metrics": {
+        "displacement": 0,
+        "duration": 5.019,
+        "end_position": {
+          "x": 0,
+          "y": 0.334383845329285,
+          "z": 0
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 0,
+          "y": 0.334383845329285,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "explore_area",
+      "status": "failed",
+      "type": "movement"
+    }
+  ],
+  "timestamp": "2026-01-18T20:22:21"
+}

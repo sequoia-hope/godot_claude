@@ -1,0 +1,174 @@
+{
+	"errors": [],
+	"feature": "nintendo_walk",
+	"performance": {
+		"avg_fps": 144.103006039361,
+		"frame_count": 2333,
+		"total_duration": 16.1898079999993
+	},
+	"status": "completed",
+	"summary": {
+		"failed": 3,
+		"issues": [
+			"Distance 1.01714956387877 < required 3",
+			"Distance 0 < required 3",
+			"Player did not leave floor"
+		],
+		"overall_status": "failed",
+		"passed": 3,
+		"total": 6
+	},
+	"tests": [
+		{
+			"description": "Verify game loads and player exists",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 0.992446899414062,
+				"duration": 2.01,
+				"end_position": {
+					"x": -34,
+					"y": 0.000330857932567596,
+					"z": 34
+				},
+				"left_floor": true,
+				"start_position": {
+					"x": -34,
+					"y": 0.992777764797211,
+					"z": 34
+				},
+				"total_distance": 0.992446906864643
+			},
+			"name": "initial_state",
+			"status": "passed",
+			"type": "state"
+		},
+		{
+			"description": "Test forward movement",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 15.0834941864014,
+				"duration": 3.016,
+				"end_position": {
+					"x": -20.3903388977051,
+					"y": 0.000330857932567596,
+					"z": 27.4970054626465
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": -34,
+					"y": 0.000330857932567596,
+					"z": 34
+				},
+				"total_distance": 15.0834946259856
+			},
+			"name": "move_forward",
+			"status": "passed",
+			"type": "movement"
+		},
+		{
+			"description": "Test left strafe",
+			"events": [],
+			"issues": [
+				"Distance 1.01714956387877 < required 3"
+			],
+			"metrics": {
+				"displacement": 1.00333428382874,
+				"duration": 2.013,
+				"end_position": {
+					"x": -19.4101943969727,
+					"y": 0.000330857932567596,
+					"z": 27.2825374603271
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": -20.3903388977051,
+					"y": 0.000330857932567596,
+					"z": 27.4970054626465
+				},
+				"total_distance": 1.01714956387877
+			},
+			"name": "move_left",
+			"status": "failed",
+			"type": "movement"
+		},
+		{
+			"description": "Test right strafe",
+			"events": [],
+			"issues": [
+				"Distance 0 < required 3"
+			],
+			"metrics": {
+				"displacement": 0,
+				"duration": 2.008,
+				"end_position": {
+					"x": -19.4101943969727,
+					"y": 0.000330857932567596,
+					"z": 27.2825374603271
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": -19.4101943969727,
+					"y": 0.000330857932567596,
+					"z": 27.2825374603271
+				},
+				"total_distance": 0
+			},
+			"name": "move_right",
+			"status": "failed",
+			"type": "movement"
+		},
+		{
+			"description": "Test jumping",
+			"events": [],
+			"issues": [
+				"Player did not leave floor"
+			],
+			"metrics": {
+				"displacement": 0,
+				"duration": 2.014,
+				"end_position": {
+					"x": -19.4101943969727,
+					"y": 0.000330857932567596,
+					"z": 27.2825374603271
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": -19.4101943969727,
+					"y": 0.000330857932567596,
+					"z": 27.2825374603271
+				},
+				"total_distance": 0
+			},
+			"name": "jump",
+			"status": "failed",
+			"type": "movement"
+		},
+		{
+			"description": "Walk around the area",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 25.0834579467773,
+				"duration": 5.027,
+				"end_position": {
+					"x": 3.22220373153687,
+					"y": 0.000330857932567596,
+					"z": 16.4679908752441
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": -19.4101943969727,
+					"y": 0.000330857932567596,
+					"z": 27.2825374603271
+				},
+				"total_distance": 25.0834589526057
+			},
+			"name": "explore_area",
+			"status": "passed",
+			"type": "movement"
+		}
+	],
+	"timestamp": "2026-01-19T20:27:25"
+}

@@ -17,12 +17,13 @@ RUN apt-get update && apt-get install -y \
     libpulse0 \
     xvfb \
     x11vnc \
+    scrot \
     python3 \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Set Godot version
-ENV GODOT_VERSION=4.2.1
+ENV GODOT_VERSION=4.5.1
 
 # Download and install Godot headless
 RUN wget https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip \

@@ -1,0 +1,164 @@
+{
+  "errors": [],
+  "feature": "nintendo_walk",
+  "performance": {
+    "avg_fps": 144.486061528868,
+    "frame_count": 2330,
+    "total_duration": 16.1261229999993
+  },
+  "status": "completed",
+  "summary": {
+    "failed": 0,
+    "issues": [],
+    "overall_status": "passed",
+    "passed": 6,
+    "total": 6
+  },
+  "tests": [
+    {
+      "description": "Verify game loads and player exists",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0.983381688594818,
+        "duration": 2.009,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 0,
+          "y": 0.983666658401489,
+          "z": 0
+        },
+        "total_distance": 0.983381673693657
+      },
+      "name": "initial_state",
+      "status": "passed",
+      "type": "state"
+    },
+    {
+      "description": "Test forward movement",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 14.999979019165,
+        "duration": 3.009,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": -14.999979019165
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 14.999979019165
+      },
+      "name": "move_forward",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Test left strafe",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 4.49999904632568,
+        "duration": 2.008,
+        "end_position": {
+          "x": -4.49999904632568,
+          "y": 0.000284984707832336,
+          "z": -14.999979019165
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": -14.999979019165
+        },
+        "total_distance": 4.49999904632568
+      },
+      "name": "move_left",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Test right strafe",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 10,
+        "duration": 2.008,
+        "end_position": {
+          "x": 5.50000143051147,
+          "y": 0.000284984707832336,
+          "z": -14.999979019165
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": -4.49999904632568,
+          "y": 0.000284984707832336,
+          "z": -14.999979019165
+        },
+        "total_distance": 10.0000004768372
+      },
+      "name": "move_right",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Test jumping",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 1.27495872974396,
+        "duration": 2.007,
+        "end_position": {
+          "x": 6.7086238861084,
+          "y": 0.40618097782135,
+          "z": -14.999979019165
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 5.50000143051147,
+          "y": 0.000284984707832336,
+          "z": -14.999979019165
+        },
+        "total_distance": 5.33956461912021
+      },
+      "name": "jump",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Walk around the area",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 17.6823329925537,
+        "duration": 5.017,
+        "end_position": {
+          "x": 6.7086238861084,
+          "y": 0.000845144793856889,
+          "z": -32.6776657104492
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 6.7086238861084,
+          "y": 0.40618097782135,
+          "z": -14.999979019165
+        },
+        "total_distance": 25.1272241994739
+      },
+      "name": "explore_area",
+      "status": "passed",
+      "type": "movement"
+    }
+  ],
+  "timestamp": "2026-01-18T21:48:57"
+}

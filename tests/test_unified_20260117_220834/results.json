@@ -1,0 +1,15 @@
+{
+  "status": "fallback",
+  "timestamp": "2026-01-17T22:09:34.605677",
+  "build": "test_unified",
+  "screenshots": [],
+  "performance": {
+    "avg_fps": 0,
+    "min_fps": 0,
+    "max_fps": 0,
+    "avg_memory_mb": 0
+  },
+  "errors": [
+    "Tests not executed - Docker unavailable or execution failed"
+  ]
+}

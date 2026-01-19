@@ -2,12 +2,14 @@
 """
 Visual Analysis Module
 
-Uses Claude's multimodal API to analyze game screenshots and validate:
-- Correctness of rendered environment
-- Player movement validation
-- Animation playback verification
-- Visual artifacts or rendering errors
-- Overall scene composition
+For Claude Code Unified Session:
+- This module provides screenshot listing and metadata extraction
+- Claude Code performs actual visual analysis by reading images directly
+- API-based analysis is optional and disabled by default
+
+Usage in Claude Code workflow:
+    python visual_analyzer.py /path/to/test_results --list-screenshots
+    # Returns JSON list of screenshot paths for Claude Code to analyze
 """
 
 import os
@@ -18,259 +20,162 @@ import argparse
 from pathlib import Path
 from typing import List, Dict, Optional
 
-# Load environment variables from .env file if it exists
-env_file = Path(__file__).parent.parent / ".env"
-if env_file.exists():
-    with open(env_file) as f:
-        for line in f:
-            line = line.strip()
-            if line and not line.startswith('#') and '=' in line:
-                key, value = line.split('=', 1)
-                os.environ[key] = value.strip('"').strip("'")
-
-try:
-    import anthropic
-except ImportError:
-    print("Error: anthropic package not installed. Install with: pip install anthropic")
-    sys.exit(1)
-
 
 class VisualAnalyzer:
-    """Analyzes game screenshots using multimodal AI"""
+    """Analyzes game screenshots - primarily for Claude Code unified session"""
 
-    def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
-        if not self.api_key:
-            raise ValueError("ANTHROPIC_API_KEY not found in environment")
+    def __init__(self):
+        """Initialize without requiring API key"""
+        pass
 
-        self.client = anthropic.Anthropic(api_key=self.api_key)
-        self.model = "claude-sonnet-4-5-20250929"
-
-    def load_image_base64(self, image_path: Path) -> str:
-        """Load image and convert to base64"""
-        with open(image_path, 'rb') as f:
-            image_data = f.read()
-        return base64.standard_b64encode(image_data).decode('utf-8')
-
-    def analyze_screenshot(self, image_path: Path, context: Dict) -> Dict:
+    def list_screenshots(self, test_dir: Path) -> Dict:
         """
-        Analyze a single screenshot
+        List all screenshots in a test directory with metadata.
 
-        Args:
-            image_path: Path to screenshot PNG file
-            context: Dict with test context (test_name, description, expected_result)
-
-        Returns:
-            Dict with analysis results
+        This is the primary method for Claude Code unified session.
+        Claude Code will read these images directly for analysis.
         """
-        print(f"Analyzing: {image_path.name}")
+        screenshots = sorted(test_dir.glob("*.png"))
 
-        # Load image
-        image_base64 = self.load_image_base64(image_path)
-
-        # Determine media type
-        media_type = "image/png"
-        if image_path.suffix.lower() in ['.jpg', '.jpeg']:
-            media_type = "image/jpeg"
-
-        # Build prompt
-        test_name = context.get('test_name', 'unknown')
-        description = context.get('description', '')
-        expected = context.get('expected_result', '')
-
-        prompt = f"""Analyze this game screenshot from a test run.
-
-Test: {test_name}
-Description: {description}
-Expected: {expected}
-
-Please evaluate:
-1. Visual Quality: Is the scene rendered correctly? Any visual artifacts, missing textures, or rendering errors?
-2. Environment: Are all expected elements visible (walls, floor, objects)?
-3. Lighting: Is lighting adequate to see the environment?
-4. Camera: Is the camera positioned and oriented correctly?
-5. Player: If a player character should be visible, is it rendered properly?
-
-Provide your analysis in JSON format:
-{{
-    "overall_quality": "good|acceptable|poor",
-    "issues": ["list of specific issues found"],
-    "observations": ["list of notable observations"],
-    "recommendations": ["suggested fixes or improvements"],
-    "confidence": 0.0-1.0
-}}"""
-
-        try:
-            response = self.client.messages.create(
-                model=self.model,
-                max_tokens=1024,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "image",
-                                "source": {
-                                    "type": "base64",
-                                    "media_type": media_type,
-                                    "data": image_base64
-                                }
-                            },
-                            {
-                                "type": "text",
-                                "text": prompt
-                            }
-                        ]
-                    }
-                ]
-            )
-
-            # Parse response
-            response_text = response.content[0].text
-
-            # Extract JSON if wrapped in markdown
-            if "```json" in response_text:
-                json_start = response_text.find("```json") + 7
-                json_end = response_text.find("```", json_start)
-                response_text = response_text[json_start:json_end].strip()
-            elif "```" in response_text:
-                json_start = response_text.find("```") + 3
-                json_end = response_text.find("```", json_start)
-                response_text = response_text[json_start:json_end].strip()
-
-            analysis = json.loads(response_text)
-            analysis['screenshot'] = str(image_path)
-
-            return analysis
-
-        except Exception as e:
-            print(f"Error analyzing screenshot: {e}")
-            return {
-                "overall_quality": "error",
-                "issues": [f"Analysis failed: {str(e)}"],
-                "observations": [],
-                "recommendations": [],
-                "confidence": 0.0,
-                "screenshot": str(image_path)
-            }
-
-    def analyze_test_sequence(self, screenshots: List[Path], test_results: Dict) -> Dict:
-        """
-        Analyze a sequence of screenshots from a test run
-
-        Args:
-            screenshots: List of screenshot paths
-            test_results: Dict with test metadata
-
-        Returns:
-            Dict with comprehensive analysis
-        """
-        print(f"\nAnalyzing {len(screenshots)} screenshots...")
-
-        analyses = []
-        all_issues = []
-        all_recommendations = []
-
+        # Group by test (start/end pairs)
+        test_pairs = {}
         for screenshot in screenshots:
-            # Extract test name from filename
-            # Format: 001_test_name_start.png
-            parts = screenshot.stem.split('_', 1)
-            test_name = parts[1] if len(parts) > 1 else screenshot.stem
+            parts = screenshot.stem.split('_')
+            if len(parts) >= 3:
+                suffix = parts[-1]  # 'start' or 'end'
+                test_name = '_'.join(parts[1:-1])
+                if test_name not in test_pairs:
+                    test_pairs[test_name] = {"start": None, "end": None}
+                test_pairs[test_name][suffix] = str(screenshot)
 
-            context = {
-                "test_name": test_name,
-                "description": f"Screenshot from test: {test_name}",
-                "expected_result": "Clean render with no artifacts"
-            }
-
-            analysis = self.analyze_screenshot(screenshot, context)
-            analyses.append(analysis)
-
-            # Collect issues
-            if analysis.get('issues'):
-                all_issues.extend(analysis['issues'])
-
-            if analysis.get('recommendations'):
-                all_recommendations.extend(analysis['recommendations'])
-
-        # Aggregate results
-        quality_scores = [a.get('overall_quality', 'poor') for a in analyses]
-        good_count = quality_scores.count('good')
-        acceptable_count = quality_scores.count('acceptable')
-        poor_count = quality_scores.count('poor')
-
-        overall_status = "passed"
-        if poor_count > len(analyses) * 0.3:  # More than 30% poor quality
-            overall_status = "failed"
-        elif poor_count > 0 or acceptable_count > len(analyses) * 0.5:
-            overall_status = "needs_improvement"
-
-        comprehensive_analysis = {
-            "status": overall_status,
+        return {
+            "test_dir": str(test_dir),
             "screenshot_count": len(screenshots),
-            "quality_breakdown": {
-                "good": good_count,
-                "acceptable": acceptable_count,
-                "poor": poor_count
-            },
-            "all_issues": list(set(all_issues)),  # Deduplicate
-            "all_recommendations": list(set(all_recommendations)),  # Deduplicate
-            "individual_analyses": analyses,
-            "summary": self._generate_summary(analyses, overall_status)
+            "screenshots": [str(s) for s in screenshots],
+            "test_pairs": test_pairs,
+            "tests": list(test_pairs.keys())
         }
 
-        return comprehensive_analysis
+    def get_movement_test_pairs(self, test_dir: Path) -> List[Dict]:
+        """
+        Get before/after screenshot pairs for movement tests.
 
-    def _generate_summary(self, analyses: List[Dict], overall_status: str) -> str:
-        """Generate human-readable summary"""
-        if overall_status == "passed":
-            return "All screenshots show good visual quality with no major issues."
-        elif overall_status == "needs_improvement":
-            return "Some screenshots show acceptable quality but there are areas for improvement."
+        Returns list suitable for Claude Code to analyze.
+        """
+        info = self.list_screenshots(test_dir)
+        pairs = []
+
+        movement_tests = ['move_forward', 'move_backward', 'move_left', 'move_right', 'jump']
+
+        for test_name, pair in info['test_pairs'].items():
+            if pair['start'] and pair['end']:
+                pairs.append({
+                    "test_name": test_name,
+                    "before": pair['start'],
+                    "after": pair['end'],
+                    "is_movement_test": test_name in movement_tests,
+                    "expected": self._get_expected_movement(test_name)
+                })
+
+        return pairs
+
+    def _get_expected_movement(self, test_name: str) -> str:
+        """Get expected movement description for a test"""
+        expectations = {
+            "initial_position": "No movement - baseline capture",
+            "move_forward": "Camera moves forward, objects appear closer",
+            "move_backward": "Camera moves backward, objects appear further",
+            "move_left": "Camera strafes left, scene shifts right",
+            "move_right": "Camera strafes right, scene shifts left",
+            "jump": "Camera rises then falls, floor distance changes",
+            "turn_left": "Scene rotates clockwise",
+            "turn_right": "Scene rotates counter-clockwise"
+        }
+        return expectations.get(test_name, f"Movement for {test_name}")
+
+    def get_movement_fix_suggestion(self, test_name: str) -> str:
+        """Generate specific fix suggestions based on test type"""
+        suggestions = {
+            "move_forward": "Check player.gd _physics_process: ensure velocity.z is set when move_forward action is pressed. Verify Input.is_action_pressed('move_forward') is being checked.",
+            "move_backward": "Check player.gd _physics_process: ensure velocity.z is set when move_backward action is pressed.",
+            "move_left": "Check player.gd _physics_process: ensure velocity.x is set when move_left action is pressed.",
+            "move_right": "Check player.gd _physics_process: ensure velocity.x is set when move_right action is pressed.",
+            "jump": "Check player.gd: ensure velocity.y is set to a positive jump value when jump is pressed AND player is_on_floor(). Verify CollisionShape3D is properly configured."
+        }
+        return suggestions.get(test_name, f"Review player.gd movement handling for {test_name}")
+
+    def _generate_movement_summary(self, analyses: List[Dict],
+                                   actionable_feedback: List[Dict]) -> str:
+        """Generate summary of movement analysis"""
+        if len(actionable_feedback) == 0:
+            return "All movement tests passed visual verification."
+        elif len(actionable_feedback) == 1:
+            return f"1 movement issue detected: {actionable_feedback[0]['issue']} in {actionable_feedback[0]['test']}"
         else:
-            return "Multiple screenshots show poor quality or significant rendering issues."
+            test_names = [f['test'] for f in actionable_feedback]
+            return f"{len(actionable_feedback)} movement issues detected in tests: {', '.join(test_names)}"
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Visual Analysis Module")
+    parser = argparse.ArgumentParser(
+        description="Visual Analysis Module for Claude Code",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # List screenshots for Claude Code to analyze:
+  python visual_analyzer.py /path/to/test_results --list-screenshots
+
+  # Get movement test pairs:
+  python visual_analyzer.py /path/to/test_results --movement-pairs
+        """
+    )
     parser.add_argument("test_dir", type=str, help="Directory containing test screenshots and results")
     parser.add_argument("--output", type=str, default=None,
-                       help="Output file for analysis results (default: test_dir/visual_analysis.json)")
+                       help="Output file for results (default: stdout for list modes)")
+    parser.add_argument("--list-screenshots", action="store_true",
+                       help="List screenshots for Claude Code to analyze directly")
+    parser.add_argument("--movement-pairs", action="store_true",
+                       help="List before/after pairs for movement tests")
 
     args = parser.parse_args()
 
     test_dir = Path(args.test_dir)
     if not test_dir.exists():
-        print(f"Error: Test directory not found: {test_dir}")
+        print(f"Error: Test directory not found: {test_dir}", file=sys.stderr)
         sys.exit(1)
 
-    # Load test results if available
-    results_file = test_dir / "results.json"
-    test_results = {}
-    if results_file.exists():
-        with open(results_file, 'r') as f:
-            test_results = json.load(f)
+    analyzer = VisualAnalyzer()
 
-    # Find all screenshots
-    screenshots = sorted(test_dir.glob("*.png"))
-    if not screenshots:
-        print(f"Warning: No screenshots found in {test_dir}")
+    # List screenshots mode (for Claude Code)
+    if args.list_screenshots:
+        result = analyzer.list_screenshots(test_dir)
+        output = json.dumps(result, indent=2)
+        if args.output:
+            Path(args.output).write_text(output)
+            print(f"Screenshot list saved to: {args.output}")
+        else:
+            print(output)
         sys.exit(0)
 
-    # Analyze
-    analyzer = VisualAnalyzer()
-    analysis = analyzer.analyze_test_sequence(screenshots, test_results)
+    # Movement pairs mode (for Claude Code)
+    if args.movement_pairs:
+        pairs = analyzer.get_movement_test_pairs(test_dir)
+        output = json.dumps(pairs, indent=2)
+        if args.output:
+            Path(args.output).write_text(output)
+            print(f"Movement pairs saved to: {args.output}")
+        else:
+            print(output)
+        sys.exit(0)
 
-    # Save results
-    output_file = Path(args.output) if args.output else test_dir / "visual_analysis.json"
-    with open(output_file, 'w') as f:
-        json.dump(analysis, f, indent=2)
-
-    print(f"\nAnalysis complete!")
-    print(f"Status: {analysis['status']}")
-    print(f"Quality: {analysis['quality_breakdown']}")
-    print(f"Issues found: {len(analysis['all_issues'])}")
-    print(f"Results saved to: {output_file}")
+    # Default: show summary
+    info = analyzer.list_screenshots(test_dir)
+    print(f"Test directory: {test_dir}")
+    print(f"Screenshots found: {info['screenshot_count']}")
+    print(f"Tests: {', '.join(info['tests'])}")
+    print("\nFor Claude Code workflow, use:")
+    print(f"  python {sys.argv[0]} {test_dir} --list-screenshots")
+    print(f"  python {sys.argv[0]} {test_dir} --movement-pairs")
 
 
 if __name__ == "__main__":

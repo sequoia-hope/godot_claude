@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://test_unified_main"]
+
+[ext_resource type="Script" path="res://main.gd" id="1"]
+[ext_resource type="Script" path="res://player.gd" id="2"]
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="StandardMaterial3D" id="FloorMaterial"]
+albedo_color = Color(0.3, 0.5, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="FloorMesh"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="CapsuleShape3D" id="PlayerCollision"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="PlayerMesh"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="PlayerMaterial"]
+albedo_color = Color(0.2, 0.4, 0.8, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.433, 0.25, 0, 0.5, 0.866, -0.5, -0.75, 0.433, 5, 8, 5)
+light_energy = 1.2
+shadow_enabled = false
+
+[node name="Floor" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("FloorMesh")
+surface_material_override/0 = SubResource("FloorMaterial")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("PlayerCollision")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("PlayerMesh")
+surface_material_override/0 = SubResource("PlayerMaterial")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+current = true
+fov = 75.0

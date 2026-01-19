@@ -1,0 +1,144 @@
+{
+  "errors": [],
+  "feature": "door_with_key",
+  "performance": {
+    "avg_fps": 143.777863509024,
+    "frame_count": 2333,
+    "total_duration": 16.2264199999994
+  },
+  "status": "completed",
+  "summary": {
+    "failed": 1,
+    "issues": [
+      "Property mismatch: is_open"
+    ],
+    "overall_status": "failed",
+    "passed": 4,
+    "total": 5
+  },
+  "tests": [
+    {
+      "description": "Verify initial game state",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0.901714980602264,
+        "duration": 2.009,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 0,
+          "y": 0.901999950408936,
+          "z": 0
+        },
+        "total_distance": 0.901714965701103
+      },
+      "name": "initial_state",
+      "status": "passed",
+      "type": "state"
+    },
+    {
+      "description": "Move to key location",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0,
+        "duration": 5.015,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "find_key",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Collect the key",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0,
+        "duration": 2.019,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "pickup_key",
+      "status": "passed",
+      "type": "interaction"
+    },
+    {
+      "description": "Move to door",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0,
+        "duration": 5.022,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "approach_door",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Use key to open door",
+      "events": [],
+      "issues": [
+        "Property mismatch: is_open"
+      ],
+      "metrics": {
+        "displacement": 0,
+        "duration": 2.014,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 0
+      },
+      "name": "unlock_door",
+      "status": "failed",
+      "type": "interaction"
+    }
+  ],
+  "timestamp": "2026-01-18T19:49:25"
+}

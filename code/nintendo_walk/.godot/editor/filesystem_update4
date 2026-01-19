@@ -1,0 +1,6 @@
+res://test_runner.gd
+res://main.gd
+res://player.gd
+res://terrain.gd
+res://screenshot_test.gd
+res://debug_camera.gd

@@ -1,0 +1,521 @@
+{
+	"errors": [],
+	"feature": "door_with_key",
+	"performance": {
+		"avg_fps": 143.965877546089,
+		"frame_count": 2323,
+		"total_duration": 16.1357679999993
+	},
+	"status": "completed",
+	"summary": {
+		"failed": 1,
+		"issues": [
+			"Not near pickup (distance: 2, required: 2)"
+		],
+		"overall_status": "failed",
+		"passed": 4,
+		"total": 5
+	},
+	"tests": [
+		{
+			"description": "Verify initial game state",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 0.991548359394073,
+				"duration": 2.011,
+				"end_position": {
+					"x": 0,
+					"y": 0.000284984707832336,
+					"z": 0
+				},
+				"left_floor": true,
+				"start_position": {
+					"x": 0,
+					"y": 0.991833329200745,
+					"z": 0
+				},
+				"total_distance": 0.991548344492912
+			},
+			"name": "initial_state",
+			"status": "passed",
+			"type": "state"
+		},
+		{
+			"description": "Move to key location",
+			"events": [],
+			"issues": [
+				"Not near pickup (distance: 2, required: 2)"
+			],
+			"metrics": {
+				"displacement": 5.08333730697632,
+				"duration": 5.017,
+				"end_position": {
+					"x": 3.59446239471436,
+					"y": 0.000284984707832336,
+					"z": 3.59446239471436
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": 0,
+					"y": 0.000284984707832336,
+					"z": 0
+				},
+				"total_distance": 5.08333751559258
+			},
+			"name": "find_key",
+			"status": "failed",
+			"type": "movement"
+		},
+		{
+			"description": "Collect the key",
+			"events": [
+				{
+					"target": "Key",
+					"time": 7.356,
+					"type": "interact"
+				}
+			],
+			"issues": [],
+			"metrics": {
+				"displacement": 0,
+				"duration": 2.017,
+				"end_position": {
+					"x": 3.59446239471436,
+					"y": 0.000284984707832336,
+					"z": 3.59446239471436
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": 3.59446239471436,
+					"y": 0.000284984707832336,
+					"z": 3.59446239471436
+				},
+				"total_distance": 0
+			},
+			"name": "pickup_key",
+			"status": "passed",
+			"type": "interaction"
+		},
+		{
+			"description": "Move to door",
+			"events": [],
+			"issues": [],
+			"metrics": {
+				"displacement": 5.39221334457397,
+				"duration": 5.011,
+				"end_position": {
+					"x": 0.70710688829422,
+					"y": 0.000284984707832336,
+					"z": 8.14848709106445
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": 3.59446239471436,
+					"y": 0.000284984707832336,
+					"z": 3.59446239471436
+				},
+				"total_distance": 5.75000650435686
+			},
+			"name": "approach_door",
+			"status": "passed",
+			"type": "movement"
+		},
+		{
+			"description": "Use key to open door",
+			"events": [
+				{
+					"target": "Door",
+					"time": 14.315,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.322,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.327,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.336,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.343,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.349,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.357,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.364,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.37,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.376,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.383,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.39,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.398,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.405,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.412,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.42,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.426,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.433,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.439,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.444,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.451,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.458,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.465,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.472,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.48,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.486,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.493,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.502,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.509,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.515,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.521,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.531,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.537,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.541,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.55,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.555,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.562,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.57,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.577,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.583,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.589,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.596,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.603,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.61,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.618,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.625,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.633,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.639,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.646,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.652,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.66,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.666,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.672,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.68,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.687,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.694,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.7,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.708,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.714,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.721,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.728,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.735,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.743,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.749,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.757,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.763,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.77,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.778,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.785,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.791,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.797,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.804,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.81,
+					"type": "interact"
+				},
+				{
+					"target": "Door",
+					"time": 14.818,
+					"type": "interact"
+				}
+			],
+			"issues": [],
+			"metrics": {
+				"displacement": 0,
+				"duration": 2.03,
+				"end_position": {
+					"x": 0.70710688829422,
+					"y": 0.000284984707832336,
+					"z": 8.14848709106445
+				},
+				"left_floor": false,
+				"start_position": {
+					"x": 0.70710688829422,
+					"y": 0.000284984707832336,
+					"z": 8.14848709106445
+				},
+				"total_distance": 0
+			},
+			"name": "unlock_door",
+			"status": "passed",
+			"type": "interaction"
+		}
+	],
+	"timestamp": "2026-01-18T19:50:51"
+}

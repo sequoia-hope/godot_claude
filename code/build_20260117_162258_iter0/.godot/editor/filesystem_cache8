@@ -1,0 +1,6 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1768696693
+main.gd::GDScript::-1::1768696527::0::1::::<>Node3D<>::
+main.tscn::PackedScene::6284328421438828926::1768696527::0::1::::<><>::res://main.gd<>res://player.gd
+player.gd::GDScript::-1::1768695980::0::1::::<>CharacterBody3D<>::
+test_runner.gd::GDScript::-1::1768695986::0::1::::<>Node<>::

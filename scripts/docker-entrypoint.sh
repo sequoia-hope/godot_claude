@@ -15,5 +15,8 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Set default rendering driver for software rendering (no GPU)
+export GODOT_RENDERING_DRIVER="${GODOT_RENDERING_DRIVER:-opengl3}"
+
 # Execute the main command
 exec "$@"

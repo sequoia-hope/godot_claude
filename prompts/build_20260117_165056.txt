@@ -1,0 +1,56 @@
+Test Room - MVP Milestone
+
+Create a rectangular room for testing the AI-driven game development pipeline.
+
+ENVIRONMENT:
+- Rectangular room approximately 10 meters wide x 15 meters long x 4 meters tall
+- Walls, floor, and ceiling with simple grid placeholder texture (1-meter grid pattern)
+- Grid should be black lines on white/light gray background for easy visibility
+- Room should be fully enclosed (no gaps in walls)
+
+PLAYER:
+- CharacterBody3D-based player controller
+- Starts in the center of the room
+- First-person perspective
+- Camera attached as child node of player
+
+MOVEMENT:
+- WASD for movement (forward, backward, left strafe, right strafe)
+- Space bar for jump
+- Mouse movement for camera look/turn
+- Walking speed: 5 m/s
+- Jump height: 2 meters
+- Gravity should feel natural
+
+LIGHTING:
+- Single DirectionalLight3D positioned above and slightly to the side
+- Basic ambient lighting to ensure entire room is visible
+- No shadows required (keep performance simple)
+
+CAMERA:
+- Positioned at player head height (approximately 1.7 meters)
+- Follows player movement smoothly
+- Mouse sensitivity should allow full 360-degree rotation
+
+TECHNICAL REQUIREMENTS:
+- Include TestRunner autoload for automated testing
+- Implement input actions: move_forward, move_backward, move_left, move_right, jump
+- Enable screenshot capture capability
+- Include FPS counter and performance monitoring
+- Target 60 FPS minimum
+- Keep scene simple - no complex assets or effects
+
+VISUAL STYLE:
+- Clean, minimal aesthetic
+- Grid textures should be crisp and visible
+- No fancy materials - use StandardMaterial3D with albedo texture
+- Ensure good contrast between grid lines and background
+
+SUCCESS CRITERIA:
+- Player can walk to all four corners of the room
+- Jump mechanics work correctly (player lands safely)
+- Camera responds to mouse input smoothly
+- Grid texture is visible on all surfaces
+- No visual artifacts or z-fighting
+- Maintains 60 FPS throughout testing
+- No crashes or errors during automated test sequence

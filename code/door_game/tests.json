@@ -1,0 +1,98 @@
+{
+  "feature": "door_with_key",
+  "tests": [
+    {
+      "name": "initial_state",
+      "type": "state",
+      "description": "Verify initial game state",
+      "duration": 2.0,
+      "steps": [
+        {
+          "action": "wait",
+          "duration": 2.0
+        }
+      ],
+      "validate": {
+        "object_in_group": "door",
+        "object_in_group_2": "pickup"
+      }
+    },
+    {
+      "name": "find_key",
+      "type": "movement",
+      "description": "Move to key location",
+      "duration": 5.0,
+      "steps": [
+        {
+          "action": "move_to",
+          "target_group": "pickup",
+          "duration": 5.0
+        }
+      ],
+      "validate": {
+        "near_group": "pickup",
+        "max_distance": 2.0
+      }
+    },
+    {
+      "name": "pickup_key",
+      "type": "interaction",
+      "description": "Collect the key",
+      "duration": 2.0,
+      "steps": [
+        {
+          "action": "interact",
+          "target_group": "pickup",
+          "duration": 0.5
+        },
+        {
+          "action": "wait",
+          "duration": 1.5
+        }
+      ]
+    },
+    {
+      "name": "approach_door",
+      "type": "movement",
+      "description": "Move to door",
+      "duration": 5.0,
+      "steps": [
+        {
+          "action": "move_to",
+          "target_group": "door",
+          "duration": 5.0
+        }
+      ],
+      "validate": {
+        "near_group": "door",
+        "max_distance": 3.0
+      }
+    },
+    {
+      "name": "unlock_door",
+      "type": "interaction",
+      "description": "Use key to open door",
+      "duration": 2.0,
+      "steps": [
+        {
+          "action": "interact",
+          "target_group": "door",
+          "duration": 0.5
+        },
+        {
+          "action": "wait",
+          "duration": 1.5
+        }
+      ],
+      "validate": {
+        "state_check": {
+          "property_equals": {
+            "path": "/root/Main/Door",
+            "property": "is_open",
+            "value": true
+          }
+        }
+      }
+    }
+  ]
+}

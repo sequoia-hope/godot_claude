@@ -1,0 +1,168 @@
+{
+  "errors": [],
+  "feature": "nintendo_walk",
+  "performance": {
+    "avg_fps": 144.602937400774,
+    "frame_count": 2330,
+    "total_duration": 16.1130889999993
+  },
+  "status": "completed",
+  "summary": {
+    "failed": 1,
+    "issues": [
+      "Distance 4.19238138198853 < required 5"
+    ],
+    "overall_status": "failed",
+    "passed": 5,
+    "total": 6
+  },
+  "tests": [
+    {
+      "description": "Verify game loads and player exists",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 0.983381688594818,
+        "duration": 2.009,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 0,
+          "y": 0.983666658401489,
+          "z": 0
+        },
+        "total_distance": 0.983381673693657
+      },
+      "name": "initial_state",
+      "status": "passed",
+      "type": "state"
+    },
+    {
+      "description": "Test forward movement",
+      "events": [],
+      "issues": [
+        "Distance 4.19238138198853 < required 5"
+      ],
+      "metrics": {
+        "displacement": 4.19238138198853,
+        "duration": 3.009,
+        "end_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": -4.19238138198853
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": 0
+        },
+        "total_distance": 4.19238138198853
+      },
+      "name": "move_forward",
+      "status": "failed",
+      "type": "movement"
+    },
+    {
+      "description": "Test left strafe",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 9.99999809265137,
+        "duration": 2.007,
+        "end_position": {
+          "x": -9.99999809265137,
+          "y": 0.000284984707832336,
+          "z": -4.19238138198853
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": 0,
+          "y": 0.000284984707832336,
+          "z": -4.19238138198853
+        },
+        "total_distance": 9.99999809265137
+      },
+      "name": "move_left",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Test right strafe",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 9.99999809265137,
+        "duration": 2.008,
+        "end_position": {
+          "x": 1.34110450744629e-07,
+          "y": 0.000284984707832336,
+          "z": -4.19238138198853
+        },
+        "left_floor": false,
+        "start_position": {
+          "x": -9.99999809265137,
+          "y": 0.000284984707832336,
+          "z": -4.19238138198853
+        },
+        "total_distance": 9.99999822676182
+      },
+      "name": "move_right",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Test jumping",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 1.27496755123138,
+        "duration": 2.008,
+        "end_position": {
+          "x": 1.20863151550293,
+          "y": 0.406182169914246,
+          "z": -4.19238138198853
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 1.34110450744629e-07,
+          "y": 0.000284984707832336,
+          "z": -4.19238138198853
+        },
+        "total_distance": 5.3395693381317
+      },
+      "name": "jump",
+      "status": "passed",
+      "type": "movement"
+    },
+    {
+      "description": "Walk around the area",
+      "events": [],
+      "issues": [],
+      "metrics": {
+        "displacement": 17.6823444366455,
+        "duration": 5.022,
+        "end_position": {
+          "x": 1.20863056182861,
+          "y": 0.000406042439863086,
+          "z": -21.8700695037842
+        },
+        "left_floor": true,
+        "start_position": {
+          "x": 1.20863151550293,
+          "y": 0.406182169914246,
+          "z": -4.19238138198853
+        },
+        "total_distance": 25.1273232549429
+      },
+      "name": "explore_area",
+      "status": "passed",
+      "type": "movement"
+    }
+  ],
+  "timestamp": "2026-01-18T21:48:15"
+}

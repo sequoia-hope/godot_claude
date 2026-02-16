@@ -40,7 +40,9 @@ docs/iteration_log.jsonl
 Thumbs.db
 
 # Godot
+.godot/
 .import/
 *.import
 .mono/
 data_*/
+*.uid

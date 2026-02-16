@@ -1,6 +1,0 @@
-ea4bc82a6ad023ab7ee23ee620429895
-::res://::1768694958
-main.gd::GDScript::-1::1768694417::0::1::::<>RefCounted<>::
-main.tscn::PackedScene::-1::1768694417::0::1::::<><>::res://main.gd<>res://player.gd
-player.gd::GDScript::-1::1768694417::0::1::::<>RefCounted<>::
-test_runner.gd::GDScript::-1::1768694417::0::1::::TestRunner<>Node<>::

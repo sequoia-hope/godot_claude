@@ -1,0 +1,12 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1768861536
+main.gd::GDScript::2536494490798282004::1768861350::0::1::::<>Node3D<><>0<>0<><>::
+main.tscn::PackedScene::-1::1768861050::0::1::::<><><>0<>0<><>::res://main.gd<>res://player.gd<>res://track.gd
+player.gd::GDScript::691435531667490261::1768861350::0::1::::<>CharacterBody3D<><>0<>0<><>::
+track.gd::GDScript::4523833170708992010::1768861350::0::1::::<>Node3D<><>0<>0<><>::
+::res://debug_screenshots/::1768861373
+test1.png::CompressedTexture2D::8193213176388978468::1768861118::1768861538::1::::<><><>0<>0<>c02daf56da4812472c39537666885411<>res://.godot/imported/test1.png-a3be00c3865497f24c6be8260ea9d1db.ctex::
+test2.png::CompressedTexture2D::7188006921230569762::1768861161::1768861538::1::::<><><>0<>0<>bf460eb7dce9f37d658bf581817fad57<>res://.godot/imported/test2.png-1c1aafd065aa18c614434fa3a5197407.ctex::
+test3.png::CompressedTexture2D::2232033016378207263::1768861213::1768861538::1::::<><><>0<>0<>784202b5dc5908ed6ef7ba3710536162<>res://.godot/imported/test3.png-709b8e6d104771abdc7bf7b49367c23b.ctex::
+test4.png::CompressedTexture2D::5999687378337149231::1768861309::1768861538::1::::<><><>0<>0<>86ff2222dac94826a1f8871fb7e3765c<>res://.godot/imported/test4.png-8f83f44a8f67a8b602ab582f81c73aa6.ctex::
+test5.png::CompressedTexture2D::6986083933389667071::1768861374::1768861538::1::::<><><>0<>0<>bc99ac52ff375ec431a14fb9c2f72ce1<>res://.godot/imported/test5.png-a8456726c4a2fb8b73750d051fcd209f.ctex::

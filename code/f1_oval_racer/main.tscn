@@ -1,0 +1,162 @@
+[gd_scene load_steps=18 format=3 uid="uid://f1_oval_main"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_main"]
+[ext_resource type="Script" path="res://player.gd" id="2_player"]
+[ext_resource type="Script" path="res://track.gd" id="3_track"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_car"]
+radius = 0.5
+height = 2.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(1.6, 0.4, 3.5)
+
+[sub_resource type="StandardMaterial3D" id="Material_body"]
+albedo_color = Color(0.9, 0.1, 0.1, 1)
+metallic = 0.6
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_cockpit"]
+size = Vector3(0.7, 0.35, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="Material_cockpit"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+roughness = 0.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_nose"]
+size = Vector3(0.5, 0.25, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_front_wing"]
+size = Vector3(1.8, 0.08, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rear_wing"]
+size = Vector3(1.6, 0.5, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="Material_wing"]
+albedo_color = Color(0.95, 0.95, 0.95, 1)
+roughness = 0.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 0.25
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="Material_wheel"]
+albedo_color = Color(0.15, 0.15, 0.15, 1)
+roughness = 0.9
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_top_color = Color(0.4, 0.6, 0.9, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.95, 1)
+ground_horizon_color = Color(0.7, 0.8, 0.95, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 2
+ambient_light_color = Color(0.85, 0.9, 1.0, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="Track" type="Node3D" parent="."]
+script = ExtResource("3_track")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("2_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("CapsuleShape3D_car")
+
+[node name="CarBody" type="Node3D" parent="Player"]
+
+[node name="MainBody" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = SubResource("Material_body")
+
+[node name="Cockpit" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.3)
+mesh = SubResource("BoxMesh_cockpit")
+surface_material_override/0 = SubResource("Material_cockpit")
+
+[node name="Nose" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -1.8)
+mesh = SubResource("BoxMesh_nose")
+surface_material_override/0 = SubResource("Material_body")
+
+[node name="FrontWing" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, -2.2)
+mesh = SubResource("BoxMesh_front_wing")
+surface_material_override/0 = SubResource("Material_wing")
+
+[node name="RearWing" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 1.5)
+mesh = SubResource("BoxMesh_rear_wing")
+surface_material_override/0 = SubResource("Material_wing")
+
+[node name="RearWingSupport1" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.55, 1.5)
+mesh = SubResource("BoxMesh_cockpit")
+surface_material_override/0 = SubResource("Material_body")
+
+[node name="RearWingSupport2" type="MeshInstance3D" parent="Player/CarBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.55, 1.5)
+mesh = SubResource("BoxMesh_cockpit")
+surface_material_override/0 = SubResource("Material_body")
+
+[node name="WheelFL" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0.3, -1.2)
+
+[node name="WheelMesh" type="MeshInstance3D" parent="Player/WheelFL"]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Material_wheel")
+
+[node name="WheelFR" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0.3, -1.2)
+
+[node name="WheelMesh" type="MeshInstance3D" parent="Player/WheelFR"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Material_wheel")
+
+[node name="WheelBL" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0.3, 1.0)
+
+[node name="WheelMesh" type="MeshInstance3D" parent="Player/WheelBL"]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Material_wheel")
+
+[node name="WheelBR" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0.3, 1.0)
+
+[node name="WheelMesh" type="MeshInstance3D" parent="Player/WheelBR"]
+transform = Transform3D(0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Material_wheel")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.34, 0, -0.34, 0.94, 0, 3.5, 8)
+current = true
+fov = 60.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 20, 40, 20)
+light_energy = 1.3
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")

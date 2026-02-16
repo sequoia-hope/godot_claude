@@ -29,6 +29,9 @@ from typing import Dict, List, Tuple, Optional
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
+# Available features that can be injected
+AVAILABLE_FEATURES = ["rl_agents", "fisheye"]
+
 
 class GameDevOrchestrator:
     """Main orchestration class for the AI-driven game development pipeline"""
@@ -221,7 +224,24 @@ class GameDevOrchestrator:
         """Validate generated code for common issues"""
         issues = []
 
-        # Check main.tscn for collision shapes
+        # Run comprehensive validator
+        try:
+            from godot_validator import validate_build
+            result = validate_build(build_dir)
+
+            # Convert validator errors to issues list
+            for error in result.errors:
+                issues.append(f"{error['file']}:{error['line']}: {error['message']}")
+
+            # Also include warnings as issues (but mark them)
+            for warning in result.warnings:
+                issues.append(f"[WARNING] {warning['file']}:{warning['line']}: {warning['message']}")
+
+        except ImportError:
+            # Fall back to basic validation if validator not available
+            pass
+
+        # Additional checks not in validator
         tscn_file = build_dir / "main.tscn"
         if tscn_file.exists():
             content = tscn_file.read_text()
@@ -233,15 +253,18 @@ class GameDevOrchestrator:
                     if 'shape = SubResource' not in content and 'shape = ExtResource' not in content:
                         issues.append("Player CollisionShape3D has no shape assigned - player will fall through floor")
                 else:
-                    issues.append("Player has no CollisionShape3D - player will fall through floor")
+                    if "Player has no CollisionShape3D" not in str(issues):
+                        issues.append("Player has no CollisionShape3D - player will fall through floor")
 
             # Check if Camera3D exists for player
             if 'type="CharacterBody3D"' in content and 'Camera3D' not in content:
-                issues.append("No Camera3D found - player won't be able to see")
+                if "No Camera3D found" not in str(issues):
+                    issues.append("No Camera3D found - player won't be able to see")
 
             # Check for lighting
             if 'DirectionalLight3D' not in content and 'OmniLight3D' not in content and 'SpotLight3D' not in content:
-                issues.append("No light source found - scene will be dark")
+                if "No light" not in str(issues) and "no lights" not in str(issues):
+                    issues.append("No light source found - scene will be dark")
 
         # Check player.gd for common issues
         player_file = build_dir / "player.gd"
@@ -688,6 +711,67 @@ shape = SubResource("CapsuleShape3D_player")
         with open(log_file, 'a') as f:
             f.write(json.dumps(log_entry) + '\n')
 
+    def inject_feature(self, build_dir: Path, feature: str) -> Dict:
+        """
+        Inject a feature into a game build.
+
+        Args:
+            build_dir: Path to the game build directory
+            feature: Feature name to inject (e.g., "rl_agents")
+
+        Returns:
+            Dictionary with injection results
+        """
+        print(f"Injecting feature '{feature}' into {build_dir}")
+
+        if feature not in AVAILABLE_FEATURES:
+            return {
+                "status": "error",
+                "error": f"Unknown feature: {feature}. Available: {AVAILABLE_FEATURES}"
+            }
+
+        if feature == "rl_agents":
+            return self._inject_rl_agents(build_dir)
+
+        if feature == "fisheye":
+            return self._inject_fisheye(build_dir)
+
+        return {"status": "error", "error": f"Feature {feature} not implemented"}
+
+    def _inject_rl_agents(self, build_dir: Path) -> Dict:
+        """Inject RL agents feature into a build."""
+        try:
+            from rl_injector import inject_rl_support
+            result = inject_rl_support(build_dir, workspace_root=self.workspace_root)
+            return result
+        except ImportError as e:
+            return {
+                "status": "error",
+                "error": f"Failed to import rl_injector: {e}"
+            }
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": f"Failed to inject RL support: {e}"
+            }
+
+    def _inject_fisheye(self, build_dir: Path) -> Dict:
+        """Inject fisheye camera effect into a build."""
+        try:
+            from effects_injector import inject_effect
+            result = inject_effect(build_dir, "fisheye", workspace_root=self.workspace_root)
+            return result
+        except ImportError as e:
+            return {
+                "status": "error",
+                "error": f"Failed to import effects_injector: {e}"
+            }
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": f"Failed to inject fisheye effect: {e}"
+            }
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -700,6 +784,9 @@ Examples:
 
   # Create a new build directory:
   python orchestrator.py --create-build my_game_v1
+
+  # Inject RL training support into a build:
+  python orchestrator.py --feature rl_agents --build-dir ./code/my_build
         """
     )
 
@@ -709,6 +796,8 @@ Examples:
                        help="Path to build directory to test")
     parser.add_argument("--create-build", type=str,
                        help="Create a new empty build directory with this name")
+    parser.add_argument("--feature", type=str, choices=AVAILABLE_FEATURES,
+                       help=f"Inject a feature into the build. Available: {', '.join(AVAILABLE_FEATURES)}")
 
     args = parser.parse_args()
 
@@ -728,6 +817,25 @@ Examples:
         print("  - main.tscn")
         print("  - main.gd")
         print("  - player.gd")
+        sys.exit(0)
+
+    if args.feature:
+        # Inject a feature into a build
+        if not args.build_dir:
+            print("Error: --build-dir required with --feature")
+            sys.exit(1)
+
+        build_dir = Path(args.build_dir)
+        if not build_dir.is_absolute():
+            build_dir = workspace_root / args.build_dir
+
+        result = orchestrator.inject_feature(build_dir, args.feature)
+
+        if result.get("status") == "error":
+            print(f"Error: {result.get('error')}")
+            sys.exit(1)
+
+        print(f"\nFeature '{args.feature}' injected successfully!")
         sys.exit(0)
 
     if args.test_only:

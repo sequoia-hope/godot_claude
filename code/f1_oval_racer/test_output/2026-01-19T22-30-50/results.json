@@ -1,0 +1,242 @@
+{
+	"errors": [],
+	"movement_metrics": {
+		"initial_position": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 289,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "success",
+			"success_reason": "Initial position captured",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"jump": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [
+				"Player did not leave floor during jump test",
+				"No upward velocity - check jump implementation"
+			],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 290,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "failed",
+			"success_reason": "Jump not detected",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"move_backward": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [
+				"Player did not move during move_backward test (distance: 0.000)",
+				"Velocity stayed near zero - check movement input handling"
+			],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 435,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "failed",
+			"success_reason": "No significant movement detected",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"move_forward": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [
+				"Player did not move during move_forward test (distance: 0.000)",
+				"Velocity stayed near zero - check movement input handling"
+			],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 436,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "failed",
+			"success_reason": "No significant movement detected",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"move_left": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [
+				"Player did not move during move_left test (distance: 0.000)",
+				"Velocity stayed near zero - check movement input handling"
+			],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 291,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "failed",
+			"success_reason": "No significant movement detected",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"move_right": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [
+				"Player did not move during move_right test (distance: 0.000)",
+				"Velocity stayed near zero - check movement input handling"
+			],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 290,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "failed",
+			"success_reason": "No significant movement detected",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"turn_left": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 290,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "success",
+			"success_reason": "Camera rotation test (position change not required)",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		},
+		"turn_right": {
+			"avg_velocity": 0,
+			"displacement": 0,
+			"end_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"floor_time_ratio": 1,
+			"horizontal_displacement": 0,
+			"issues": [],
+			"left_floor": false,
+			"max_velocity": 0,
+			"sample_count": 290,
+			"start_position": {
+				"x": -5,
+				"y": 0.94996839761734,
+				"z": -25
+			},
+			"status": "success",
+			"success_reason": "Camera rotation test (position change not required)",
+			"total_distance": 0,
+			"vertical_displacement": 0
+		}
+	},
+	"movement_summary": {
+		"failed_tests": 5,
+		"issues": [
+			"Player did not move during move_forward test (distance: 0.000)",
+			"Velocity stayed near zero - check movement input handling",
+			"Player did not move during move_backward test (distance: 0.000)",
+			"Velocity stayed near zero - check movement input handling",
+			"Player did not move during move_left test (distance: 0.000)",
+			"Velocity stayed near zero - check movement input handling",
+			"Player did not move during move_right test (distance: 0.000)",
+			"Velocity stayed near zero - check movement input handling",
+			"Player did not leave floor during jump test",
+			"No upward velocity - check jump implementation"
+		],
+		"overall_status": "issues_detected",
+		"passed_tests": 3,
+		"player_found": true,
+		"total_issues": 10
+	},
+	"performance": {
+		"avg_fps": 144.553633217996,
+		"avg_memory_mb": 29.0871620178223,
+		"frame_count": 2611,
+		"max_fps": 163.176502583628,
+		"min_fps": 15,
+		"total_duration": 18.0624999999996
+	},
+	"screenshots": [],
+	"status": "completed",
+	"timestamp": "2026-01-19T22:31:08"
+}

@@ -63,3 +63,7 @@ environment/defaults/default_clear_color=Color(0.529, 0.808, 0.922, 1)
 
 
 
+
+[autoload]
+RLEnv="*res://rl_env.gd"
+

@@ -280,6 +280,38 @@ class FeatureWorkflow:
                         "validate": {"left_floor": True}
                     }
                 ]
+            },
+            "rl_agents": {
+                "feature": "rl_agents",
+                "description": "Reinforcement learning training support",
+                "tests": [
+                    {
+                        "name": "rl_env_loaded",
+                        "type": "state",
+                        "description": "Verify RLEnv autoload is active",
+                        "duration": 2.0,
+                        "steps": [{"action": "wait", "duration": 2.0}],
+                        "validate": {"autoload_exists": "RLEnv"}
+                    },
+                    {
+                        "name": "player_on_path",
+                        "type": "state",
+                        "description": "Verify player starts on/near path",
+                        "duration": 2.0,
+                        "steps": [{"action": "wait", "duration": 2.0}],
+                        "validate": {"on_track": True}
+                    },
+                    {
+                        "name": "progress_tracking",
+                        "type": "movement",
+                        "description": "Test progress increases when moving along path",
+                        "duration": 5.0,
+                        "steps": [{"action": "input", "inputs": ["move_forward"], "duration": 5.0}],
+                        "validate": {"progress_increased": True}
+                    }
+                ],
+                "inject_command": "python scripts/orchestrator.py --feature rl_agents --build-dir {build_dir}",
+                "training_command": "python scripts/rl/train_ppo.py --env-path {build_dir} --total-timesteps 100000"
             }
         }
 
@@ -403,7 +435,7 @@ Examples:
 
     # template command
     template_p = subparsers.add_parser('template', help='Generate test template')
-    template_p.add_argument('feature_type', help='Type: door, pickup, door_with_key, movement')
+    template_p.add_argument('feature_type', help='Type: door, pickup, door_with_key, movement, rl_agents')
     template_p.add_argument('--output', '-o', help='Build name to write tests.json')
 
     # test command

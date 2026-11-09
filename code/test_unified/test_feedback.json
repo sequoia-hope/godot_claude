@@ -1,7 +1,7 @@
 {
   "status": "completed",
-  "build_dir": "/home/sequoia/Software/engine/code/test_unified",
-  "test_run_dir": "/home/sequoia/Software/engine/tests/test_unified_20260117_221608",
+  "build_dir": "code/test_unified",
+  "test_run_dir": "tests/test_unified_20260117_221608",
   "test_results": {
     "errors": [],
     "movement_metrics": {

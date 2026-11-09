@@ -1,7 +1,7 @@
 {
   "status": "completed",
-  "build_dir": "/home/sequoia/Software/engine/code/door_game",
-  "test_run_dir": "/home/sequoia/Software/engine/tests/door_game_20260118_115140",
+  "build_dir": "code/door_game",
+  "test_run_dir": "tests/door_game_20260118_115140",
   "test_results": {
     "errors": [],
     "feature": "door_with_key",

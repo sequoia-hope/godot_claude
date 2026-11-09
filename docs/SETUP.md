@@ -46,7 +46,7 @@ echo "ANTHROPIC_API_KEY=your-api-key-here" > .env
 ### 3. Install Python Dependencies
 
 ```bash
-cd /home/sequoia/Software/engine
+cd godot_claude   # your clone of this repo
 pip3 install -r requirements.txt
 ```
 
@@ -67,7 +67,7 @@ This will:
 ### 5. Build Docker Image
 
 ```bash
-cd /home/sequoia/Software/engine
+cd godot_claude   # your clone of this repo
 docker-compose build
 ```
 
@@ -192,7 +192,7 @@ See `game_dev_pipeline_plan.md` for the complete roadmap.
 ## Directory Structure
 
 ```
-/home/sequoia/Software/engine/
+godot_claude/
 ├── prompts/          # Scene descriptions
 ├── code/             # Generated Godot projects
 ├── tests/            # Test results and screenshots

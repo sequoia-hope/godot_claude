@@ -1,7 +1,7 @@
 {
   "status": "completed",
-  "build_dir": "/home/sequoia/Software/engine/code/trail_runner_robot",
-  "test_run_dir": "/home/sequoia/Software/engine/tests/trail_runner_robot_20260119_134701",
+  "build_dir": "code/trail_runner_robot",
+  "test_run_dir": "tests/trail_runner_robot_20260119_134701",
   "test_results": {
     "errors": [],
     "movement_metrics": {

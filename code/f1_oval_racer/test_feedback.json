@@ -1,7 +1,7 @@
 {
   "status": "completed",
-  "build_dir": "/home/sequoia/Software/engine/code/f1_oval_racer",
-  "test_run_dir": "/home/sequoia/Software/engine/tests/f1_oval_racer_20260119_143046",
+  "build_dir": "code/f1_oval_racer",
+  "test_run_dir": "tests/f1_oval_racer_20260119_143046",
   "test_results": {
     "errors": [],
     "movement_metrics": {

@@ -1,7 +1,7 @@
 {
   "status": "completed",
-  "build_dir": "/home/sequoia/Software/engine/code/skid_steer_robot",
-  "test_run_dir": "/home/sequoia/Software/engine/tests/skid_steer_robot_20260119_133503",
+  "build_dir": "code/skid_steer_robot",
+  "test_run_dir": "tests/skid_steer_robot_20260119_133503",
   "test_results": {
     "errors": [],
     "movement_metrics": {

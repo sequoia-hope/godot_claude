@@ -1,7 +1,7 @@
 {
   "status": "completed",
-  "build_dir": "/home/sequoia/Software/engine/code/nintendo_walk",
-  "test_run_dir": "/home/sequoia/Software/engine/tests/nintendo_walk_20260119_122706",
+  "build_dir": "code/nintendo_walk",
+  "test_run_dir": "tests/nintendo_walk_20260119_122706",
   "test_results": {
     "errors": [],
     "feature": "nintendo_walk",
